@@ -1,5 +1,5 @@
 /**
- * Ejercicio 29 JAVA - El AHORCADO FRIKI 2/3
+ * Ejercicio 29 JAVA - El AHORCADO FRIKI 3/3
  */
 package ahorcadoFriki;
 
@@ -10,7 +10,7 @@ public class Juego {
     Scanner sc = new Scanner(System.in);
     FileReader archivo;
     BufferedReader archivoLeido;
-    String[] palabras;
+    String[] palabras, muneco = {"  O \n ", "/", "|", "\\\n"," / ", "\\\n"};
     String palabraActual;
     char[] palabraOculta;
     int fallos = 0;
@@ -47,7 +47,7 @@ public class Juego {
         int num = (int) (Math.random() * palabras.length);
         
         palabraActual = palabras[num];
-        
+
         ocultaPalabra();
     }
 
@@ -60,10 +60,13 @@ public class Juego {
     }
     
     public void comenzarPartida(){
+
         while(fallos <= 5){
+            mostrarMuneco();
             mostrarPalabra();
             eligeLetra();
             comprobarGanar();
+
         }
         hasPerdido();
     }
@@ -83,6 +86,7 @@ public class Juego {
         letra = sc.next().charAt(0); //Sólo lee o guarda la primera letra escrita por el usuario
         
         compruebaLetra();
+        
         if(letraEncontrada == false){
             hasFallado();
         }
@@ -115,13 +119,23 @@ public class Juego {
         }
         
         if(hasGanado){
+            mostrarPalabra();
             System.out.println("[!] Felicidades has ganado: " + palabraActual);
             System.out.println("Has tenidos " +  fallos + " fallos.");
+            System.exit(0);
         }
     }
 
     private void hasPerdido() {
+        mostrarMuneco();
         System.out.println("[!] Has perdido!!. La palabra era: " + palabraActual);
+
+    }
+    
+    private void mostrarMuneco(){
+        for(int i = 0; i < fallos; i++){
+            System.out.print(muneco[i]);
+        }
     }
 }
 

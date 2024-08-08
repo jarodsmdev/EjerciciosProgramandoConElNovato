@@ -1,5 +1,5 @@
 /**
- * Ejercicio 29 JAVA - El AHORCADO FRIKI 1/3
+ * Ejercicio 29 JAVA - El AHORCADO FRIKI 3/3
  */
 package ahorcadoFriki;
 
