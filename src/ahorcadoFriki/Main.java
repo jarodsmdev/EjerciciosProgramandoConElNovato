@@ -8,6 +8,7 @@ public class Main {
         
         Juego juego = new Juego("./src/ahorcadoFriki/palabras.txt");
         
-        juego.mostrarPalabras();
+        //juego.mostrarPalabras();
+        juego.comenzarPartida();
     }
 }
