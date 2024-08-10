@@ -1,1 +1,3 @@
-
+Saitama;Gana de un golpe;Ciudad Z
+Batman;Millonario;Gothan City
+Hulk;Es verde;idk
