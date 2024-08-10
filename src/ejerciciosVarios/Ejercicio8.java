@@ -1,6 +1,7 @@
-
-package ejerciciosVariables;
-
+/**
+ * Ejercicio 33 JAVA - CARRERA DE VEHICULOS
+ */
+package ejerciciosVarios;
 
 public class Ejercicio8 {
     
@@ -21,14 +22,15 @@ class Vehiculo extends Thread{
     private int dRecorrida = 0;
     
     public Vehiculo(String nombre){
-        setName(nombre);
+        setName(nombre); //setName: Le da un nombre al 'Hilo'
     }
     
+    @Override
     public void run(){
         
         while(true){
             try {
-                Thread.sleep((long) (Math.random()*400)+100);
+                Thread.sleep((long) (Math.random() * 400) + 100);
                 dRecorrida += 10;
                 System.out.println(getName() + " ha recorrido " + dRecorrida + " metros.");
 
