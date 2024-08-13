@@ -1,6 +1,6 @@
 /**
  *
- * Ejercicio 42 JAVA - FURIOSO CLIC (1/2)
+ * Ejercicio 42 JAVA - FURIOSO CLIC (2/2)
  */
 
 package furiosoClic;
