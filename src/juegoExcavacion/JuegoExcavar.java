@@ -80,7 +80,7 @@ public class JuegoExcavar {
             System.out.println("Has logrado salir sin que se haya derrumbado todo");
             System.out.println("Has conseguido: " + carbon + " kilos de carbón. [" + carbon + "] puntos");
             System.out.println("Has conseguido: " + oro + " kilos de oro. [" + oro * 10 + "] puntos");
-            System.out.println("Has conseguido: " + diamante + " kilos de diamantes. [" + diamantes * 50 + "] puntos");
+            System.out.println("Has conseguido: " + diamantes + " kilos de diamantes. [" + diamantes * 50 + "] puntos");
             int total = carbon + (oro * 10) + (diamantes * 50);
 
             tablaPuntuacion(total);
