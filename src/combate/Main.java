@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args){
         
-        Heroe miHeroe = new Heroe("Ultrahéroe", 120, 20);
+        Heroe miHeroe = new Heroe("Gokú", 120, 20);
         Villano miVillano = new Villano("Freezer", 150, 14);
         
         System.out.println("Comienza el combate!!!");
