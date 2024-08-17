@@ -44,7 +44,7 @@ public class OnePiece {
 
     private boolean desenterrar(int x, int y) {
 
-        if (x > 0 && x < 9 && y > 0 && y < 10) {
+        if (x > 0 && x < 10 && y > 0 && y < 10) {
 
             contador++;
 
