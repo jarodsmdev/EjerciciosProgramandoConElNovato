@@ -1,0 +1,18 @@
+Eclipse:
+1. Ir al proyecto
+2. Botón contextual Export / Java / Runnable Jar File
+3. Seleccionar la clase principal (que contiene el método main)
+4. Seleccionar la carpeta de destino
+5. Agregar el nombre del archivo final con extension .jar
+6. Seleccionar "Extract required libraries into generated JAR"
+7. Finalizar
+
+Terminal
+1. Ubicar la clase o las clases que se desean exportar
+2. Dejarlas juntas en una carpeta para mayor comodidad, quitar el nombre del paquete en caso de no pertenecer a ninguno
+3. usar el comando javac <nombredelarchivo.java>
+4. Crear un archivo llamado "Manifest.txt"
+5. En el interior del archivo Manifest agregar Main-Class: <nombredelaclasequecontieneelmain>
+6. Debe tener un salto de línea el archivo Manifest.txt
+7. Ejecutar el siguiente comando: jar cfm <nombreArchivo>.jar Manifest.txt *.class
+8. Con esto se generará un archivo .jar ejecutable en cualquier sistema que tenga java instalado
