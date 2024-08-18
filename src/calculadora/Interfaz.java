@@ -1,6 +1,6 @@
 /**
  *
- * Ejercicio 46 JAVA - CALCULADORA (1/2 Interfaz)
+ * Ejercicio 46 JAVA - CALCULADORA (2/2 Lógica)
  */
 
 package calculadora;
@@ -18,7 +18,7 @@ public class Interfaz {
 
     private FramePersonalizado marco;
     private JPanel panel;
-    private JTextField pantalla;
+    private static JTextField pantalla;
     private JPanel panelBotones;
     
     public Interfaz(){
@@ -54,7 +54,18 @@ public class Interfaz {
         for(int i = 0; i < nombre.length; i++){
             JButton boton = new JButton(nombre[i]);
             boton.setFont(new Font("Arial", Font.BOLD, 20));
+            
+            boton.addActionListener(new Funcionalidad(boton.getText()));
+            
             panelBotones.add(boton);
         }
+    }
+    
+    public static String getTextoPantalla(){
+        return pantalla.getText();
+    }
+    
+    public static void setTextoPantalla(String cantidad){
+        pantalla.setText(cantidad);
     }
 }
