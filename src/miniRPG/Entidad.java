@@ -1,12 +1,11 @@
 /**
  *
- * Ejercicio 50 JAVA - Mini-RPG | PARTE 1
+ * Ejercicio 50 JAVA - Mini-RPG | PARTE 2/10
  */
 package miniRPG;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.HashSet;
 import javax.swing.JProgressBar;
 
 public class Entidad implements IAtacable{
