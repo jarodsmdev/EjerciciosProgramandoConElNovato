@@ -1,6 +1,6 @@
 /**
  *
- * Ejercicio 50 JAVA - Mini-RPG | PARTE 2/10
+ * Ejercicio 50 JAVA - Mini-RPG | PARTE 3/10
  */
 package miniRPG;
 

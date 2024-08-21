@@ -1,6 +1,6 @@
 /**
  *
- * Ejercicio 50 JAVA - Mini-RPG | PARTE 2/10
+ * Ejercicio 50 JAVA - Mini-RPG | PARTE 3/10
  */
 package miniRPG;
 
@@ -24,7 +24,7 @@ public class Entidad implements IAtacable{
         vidaActual = (int) vidaMax;
         estaVivo = true;
         barraVida = new JProgressBar(0, (int) this.vidaMax);
-        barraVida.setPreferredSize(new Dimension(100, 25));
+        barraVida.setPreferredSize(new Dimension(150, 25));
         establecerVida(vidaActual);
     }
     
