@@ -6,7 +6,6 @@
 package miniRPG;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -39,7 +38,7 @@ public class VentanaPrincipal {
         etNivel = new JLabel(" Lv1: " + pj.getNivel());
         etExp = new JLabel(" Exp: " + pj.getExp() + "/" + pj.getExpNecesaria());
         etOro = new JLabel(" Oro: " + pj.getOro());
-        etAtributos = new JLabel(" Ataque: " + pj.getAtaque() + "| Defensa: " + pj.getDefensa());
+        etAtributos = new JLabel(" Ataque: " + pj.getAtaque() + "| Defensa: " + pj.getDefensa() + "  Vida: ");
         
         etImagen = new JLabel();
         
@@ -78,7 +77,8 @@ public class VentanaPrincipal {
     }
 
     private void nuevaExploracion() {
-        
+        Exploracion exploracion = new Exploracion(this);
+        exploracion.comenzarExploracion();
     }
 
     private void modificarFuente() {
@@ -88,6 +88,10 @@ public class VentanaPrincipal {
 
     public Personaje getPj() {
         return pj;
+    }
+    
+    public JPanel getPanelSuperior(){
+        return panelSuperior;
     }
     
 }
