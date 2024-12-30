@@ -10,6 +10,6 @@ public class Main {
         Personaje heroe = new Personaje("Atreyu", 6, 2, 80);
         VentanaPrincipal juego = new VentanaPrincipal(heroe);
         
-        juego.ComanzarJuego();
+        juego.ComenzarJuego();
     }
 }
