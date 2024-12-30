@@ -46,7 +46,7 @@ public class VentanaPrincipal {
         botExplorar = new JButton("Explorar");
     }
     
-    public void ComanzarJuego(){
+    public void ComenzarJuego(){
         montarEscena();
         marco.setVisible(true);
     }
