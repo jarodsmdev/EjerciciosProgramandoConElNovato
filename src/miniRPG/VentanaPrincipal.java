@@ -38,7 +38,7 @@ public class VentanaPrincipal {
         etNivel = new JLabel(" Lv1: " + pj.getNivel());
         etExp = new JLabel(" Exp: " + pj.getExp() + "/" + pj.getExpNecesaria());
         etOro = new JLabel(" Oro: " + pj.getOro());
-        etAtributos = new JLabel(" Ataque: " + pj.getAtaque() + "| Defensa: " + pj.getDefensa() + "  Vida: ");
+        etAtributos = new JLabel(" Ataque: " + pj.getAtaque() + " | Defensa: " + pj.getDefensa() + "  Vida: ");
         
         etImagen = new JLabel();
         

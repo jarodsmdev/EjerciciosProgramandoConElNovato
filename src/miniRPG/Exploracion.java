@@ -5,6 +5,7 @@
 package miniRPG;
 
 import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -32,6 +33,7 @@ public class Exploracion {
     private JScrollPane barraDesplazamiento;
     
     private Personaje pj;
+    private Monstruo enemigo;
     
     private static int numExploracion = 0;
 
@@ -63,7 +65,9 @@ public class Exploracion {
         
         numExploracion++;
         
-        //TODO: Ahora aquí instanciariamos un objeto de la clase monstruo
+        //Ahora aquí instanciariamos un objeto de la clase monstruo
+        enemigo = Monstruo.generaMonstruo(numExploracion);
+        
     }
     
     private void montarInterfaz(){
@@ -72,7 +76,13 @@ public class Exploracion {
         // Añadimos el área de texto al panel principal
         panelPrincipal.add(barraDesplazamiento, BorderLayout.CENTER);
         
-        // TODO: Tenemos que añadir todo lo del monstruo
+        // Tenemos que añadir todo lo del monstruo
+        panelMonstruoSec.add(enemigo.getEtNombre());
+        panelMonstruoSec.add(enemigo.getBarraVida());
+        
+        panelMonstruo.setLayout(new BoxLayout(panelMonstruo, BoxLayout.Y_AXIS));
+        panelMonstruo.add(enemigo.getImagen());
+        panelMonstruo.add(panelMonstruoSec);
         
         // Elaboramos panel inferior con sus botones
         btnAtacar.addActionListener(e -> atacar());
@@ -86,7 +96,8 @@ public class Exploracion {
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
         panelPrincipal.add(panelInferior, BorderLayout.SOUTH);
         
-        // TODO: Nos queda añadir el panel del monstruo
+        // Nos queda añadir el panel del monstruo
+        panelPrincipal.add(panelMonstruo, BorderLayout.EAST);
         
         marco.add(panelPrincipal);
         marco.setSize(600,500);
