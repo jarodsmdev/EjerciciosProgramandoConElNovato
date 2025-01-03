@@ -6,6 +6,7 @@ package miniRPG;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -30,9 +31,18 @@ public class Monstruo extends Entidad {
 
         etNombre = new JLabel(nombre);
         etNombre.setFont(new Font("Roboto", Font.BOLD, 20));
-        String rutaImagen = "./imagenes/" + nombre.toLowerCase() + ".png";
+        String rutaImagen = "./resources/miniRPG/imagenes/" + nombre.toLowerCase() + ".jpg";
         imagen = new JLabel();
-        imagen.setIcon(new ImageIcon(rutaImagen));
+        //imagen.setIcon(new ImageIcon(rutaImagen));
+        int ancho = 200;
+        int alto = 200;
+        
+        ImageIcon iconoOriginal = new ImageIcon(rutaImagen);
+        
+        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(alto, ancho, Image.SCALE_SMOOTH);
+        
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        imagen.setIcon(iconoEscalado);
 
         switch (dificultad) {
             case "facil":
