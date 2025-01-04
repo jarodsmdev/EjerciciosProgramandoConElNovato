@@ -35,9 +35,12 @@ public class Exploracion {
     private Personaje pj;
     private Monstruo enemigo;
     
+    private VentanaPrincipal ventana;
+    
     private static int numExploracion = 0;
 
     public Exploracion(VentanaPrincipal ventana) {
+        this.ventana = ventana;
         pj = ventana.getPj();
         marco = new JDialog();
         panelPrincipal = new JPanel(new BorderLayout());
@@ -100,14 +103,58 @@ public class Exploracion {
         panelPrincipal.add(panelMonstruo, BorderLayout.EAST);
         
         marco.add(panelPrincipal);
-        marco.setSize(600,500);
+        marco.setSize(650,500);
         marco.setLocationRelativeTo(null);
         marco.setModal(true);
         marco.setVisible(true);
     }
 
     private void atacar() {
+        int damage;
         
+        pj.atacar(enemigo);
+        infoExproracion.setText(infoExproracion.getText() + pj.getNombre() + " ataca con una fuerza de " + pj.getAtaque() + ".\n");
+        
+        damage = pj.getAtaque() - enemigo.getDefensa();
+        if(damage <= 0) damage = 1;
+        
+        infoExproracion.setText(infoExproracion.getText() + enemigo.getNombre() + " ha recibido " + damage + " de daño.\n\n");
+        
+        enemigo.establecerVida(enemigo.getVidaActual());
+        
+        if(!enemigo.isEstaVivo()){
+            enemigoDerrotado();
+        }else{
+            enemigo.atacar(pj);
+            infoExproracion.setText(infoExproracion.getText() + enemigo.getNombre() + " ataca con una fuerza de " + enemigo.getAtaque() + ".\n");
+            
+            damage = enemigo.getAtaque() - pj.getDefensa();
+            if(damage <= 0) damage = 1;
+            
+            infoExproracion.setText(infoExproracion.getText() + pj.getNombre() + " ha recibido " + damage + " de daño.\n\n");
+            pj.establecerVida(pj.getVidaActual());
+            
+            if(!pj.isEstaVivo()) derrota();
+        }
+    }
+
+    private void enemigoDerrotado() {
+        btnAtacar.setEnabled(false);
+        btnHuir.setText("Salir");
+        
+        infoExproracion.setText(infoExproracion.getText() + enemigo.getNombre() + " ha sido derrotado.\nHas obtenido " + enemigo.getPremioOro() + " oro.\nGanas " + enemigo.getPremioExp() + " puntos de experiencia.\n");
+        
+        pj.subirExp(enemigo.getPremioExp());
+        ventana.getEtExp().setText(" Exp: " + pj.getExp() + "/" + pj.getExpNecesaria());
+        ventana.getEtNivel().setText(" Lvl: " + pj.getNivel());
+        ventana.getEtAtributos().setText(" Atq: " + pj.getAtaque() + " | Def: " + pj.getDefensa() + "  vida: ");
+        
+        pj.setOro(enemigo.getPremioOro());
+        ventana.getEtOro().setText(" Oro: " + pj.getOro());
+    }
+
+    private void derrota() {
+        System.out.println("Derrota");
     }
     
     

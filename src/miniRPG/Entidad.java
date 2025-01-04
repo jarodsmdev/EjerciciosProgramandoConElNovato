@@ -38,14 +38,13 @@ public class Entidad implements IAtacable{
 
         if(estaVivo){
             int cantidadTotal = cantidad - defensa;
-            if(cantidadTotal <= 0){
-                cantidadTotal = 1;
-            }
-            vidaActual -= cantidad;
+            if(cantidadTotal <= 0) cantidadTotal = 1;
+
+            vidaActual -= cantidadTotal;
             
             if(vidaActual <= 0){
-                //estaVivo = false;
-                setEstaVivo(false); 
+                estaVivo = false;
+                vidaActual = 0;
             }
         }
     }

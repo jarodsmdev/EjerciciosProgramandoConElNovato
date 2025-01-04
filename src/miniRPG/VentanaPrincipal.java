@@ -105,6 +105,10 @@ public class VentanaPrincipal {
     private void nuevaExploracion() {
         Exploracion exploracion = new Exploracion(this);
         exploracion.comenzarExploracion();
+        
+        //Actualizar la barra superior
+        panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
+        marco.repaint();
     }
 
     private void modificarFuente() {
@@ -119,4 +123,21 @@ public class VentanaPrincipal {
     public JPanel getPanelSuperior() {
         return panelSuperior;
     }
+
+    public JLabel getEtNivel() {
+        return etNivel;
+    }
+
+    public JLabel getEtExp() {
+        return etExp;
+    }
+
+    public JLabel getEtOro() {
+        return etOro;
+    }
+
+    public JLabel getEtAtributos() {
+        return etAtributos;
+    }
+
 }
