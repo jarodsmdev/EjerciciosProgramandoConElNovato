@@ -24,7 +24,8 @@ public class VentanaPrincipal {
     private JLabel etNombre, etNivel, etExp, etOro, etAtributos;
     private JLabel etImagen;
 
-    private JButton botExplorar;
+    private JButton btnExplorar;
+    private JButton btnTienda;
 
     private Personaje pj;
 
@@ -45,8 +46,10 @@ public class VentanaPrincipal {
 
         etImagen = new JLabel();
 
-        botExplorar = new JButton("Explorar");
-        botExplorar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnExplorar = new JButton("Explorar");
+        btnExplorar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnTienda = new JButton("Tienda");
+        btnTienda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     public void ComenzarJuego() {
@@ -91,8 +94,10 @@ public class VentanaPrincipal {
         panelPrincipal.add(etImagen, BorderLayout.CENTER);
 
         //Añadimos nuestros botones al panel inferior
-        botExplorar.addActionListener(e -> nuevaExploracion());
-        panelInferior.add(botExplorar);
+        btnExplorar.addActionListener(e -> nuevaExploracion());
+        panelInferior.add(btnExplorar);
+        btnTienda.addActionListener(e -> abrirTienda());
+        panelInferior.add(btnTienda);
 
         //Añadimos paneles secundarios al panel principal
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
@@ -138,6 +143,13 @@ public class VentanaPrincipal {
 
     public JLabel getEtAtributos() {
         return etAtributos;
+    }
+
+    private void abrirTienda() {
+        Tienda tienda = new Tienda(this);
+        tienda.abrirTienda();
+        panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
+        marco.repaint();
     }
 
 }
