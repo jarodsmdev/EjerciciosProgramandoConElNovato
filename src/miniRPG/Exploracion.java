@@ -159,13 +159,17 @@ public class Exploracion {
         ventana.getEtNivel().setText(" Lvl: " + pj.getNivel());
         ventana.getEtAtributos().setText(" Atq: " + pj.getAtaque() + " | Def: " + pj.getDefensa() + "  vida: ");
 
-        pj.setOro(enemigo.getPremioOro());
+        pj.setOro(pj.getOro() + enemigo.getPremioOro());
         ventana.getEtOro().setText(" Oro: " + pj.getOro());
     }
 
     private void derrota() {
         VentanaFinal v = new VentanaFinal(VentanaFinal.DERROTA, pj);
         v.abrir();
+    }
+    
+    public static void setNumExploracion(int numExploracion){
+        Exploracion.numExploracion = numExploracion;
     }
 
 }
