@@ -51,7 +51,7 @@ public class Tienda {
     private static JButton btnEscudo;
     private static JButton btnPocion;
     private static JButton btnMapa;
-    
+
     private static boolean agoEspada = false;
     private static boolean agoEscudo = false;
     private static boolean agoPocion = false;
@@ -67,7 +67,7 @@ public class Tienda {
         pj = ventana.getPj();
 
         marco = new JDialog();
-
+        marco.setUndecorated(true);
         panelPrincipal = new JPanel(new BorderLayout());
         panelSuperior = ventana.getPanelSuperior();
         panelInferior = new JPanel();
@@ -84,9 +84,9 @@ public class Tienda {
         imagenPocion = new JLabel(resizeImageIcon("./resources/miniRPG/imagenes/pocion.png"));
         imagenMapa = new JLabel(resizeImageIcon("./resources/miniRPG/imagenes/mapa.png"));
 
-        desEspada = new JLabel("Espada - 100 Oro.");
-        desEscudo = new JLabel("Escudo - 100 Oro.");
-        desPocion = new JLabel("Poción - 50 Oro.");
+        desEspada = new JLabel("Espada - 200 Oro.");
+        desEscudo = new JLabel("Escudo - 200 Oro.");
+        desPocion = new JLabel("Poción - 100 Oro.");
         desMapa = new JLabel("Mapa - 10 Oro.");
 
         btnEspada = new JButton("Comprar");
@@ -163,33 +163,33 @@ public class Tienda {
     private void comprarObjeto(JButton boton, String nombre) {
         switch (nombre) {
             case "Espada":
-                if (pj.getOro() >= 100) {
-                    pj.setAtaque(pj.getAtaque() + 3);
+                if (pj.getOro() >= 200) {
+                    pj.setAtaque(pj.getAtaque() + 5);
                     ventana.getEtAtributos().setText(" Atq: " + pj.getAtaque() + " | Def: " + pj.getDefensa() + "  Vida: ");
-                    pj.setOro(pj.getOro() - 100);
+                    pj.setOro(pj.getOro() - 200);
                     ventana.getEtOro().setText(" Oro: " + pj.getOro());
                     boton.setEnabled(false);
                     agoEspada = true;
                 }
                 break;
             case "Escudo":
-                if (pj.getOro() >= 100) {
-                    pj.setAtaque(pj.getDefensa() + 1);
+                if (pj.getOro() >= 200) {
+                    pj.setAtaque(pj.getDefensa() + 3);
                     ventana.getEtAtributos().setText(" Atq: " + pj.getAtaque() + " | Def: " + pj.getDefensa() + "  Vida: ");
-                    pj.setOro(pj.getOro() - 100);
+                    pj.setOro(pj.getOro() - 200);
                     ventana.getEtOro().setText(" Oro: " + pj.getOro());
                     boton.setEnabled(false);
                     agoEscudo = true;
                 }
                 break;
             case "Poción":
-                if (pj.getOro() >= 50) {
+                if (pj.getOro() >= 100) {
                     pj.setVidaActual((int) pj.getVidaMax());
                     pj.establecerVida(pj.getVidaActual());
-                    pj.setOro(pj.getOro() - 50);
+                    pj.setOro(pj.getOro() - 100);
                     ventana.getEtOro().setText(" Oro: " + pj.getOro());
-                    boton.setEnabled(false);
-                    agoPocion = true;
+                    //boton.setEnabled(false);
+                    //agoPocion = true;
                 }
                 break;
             case "Mapa":

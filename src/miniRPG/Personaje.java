@@ -1,5 +1,4 @@
 /**
- *
  * Ejercicio 50 JAVA - Mini-RPG | PARTE 3/10
  */
 
@@ -27,7 +26,7 @@ public class Personaje extends Entidad{
     
     public void subirExp(int cantidad){
         exp += cantidad;
-        if(exp >= expNecesaria){
+        while(exp >= expNecesaria){
             subirNivel();
         }
     }

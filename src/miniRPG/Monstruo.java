@@ -53,17 +53,17 @@ public class Monstruo extends Entidad {
             case "medio":
                 premioExp = (int) (Math.random() * 6 + 2);
                 premioOro = (int) (Math.random() * 20 + 1);
-                etNombre.setForeground(Color.GREEN);
+                etNombre.setForeground(Color.ORANGE);
                 break;
             case "dificil":
                 premioExp = (int) (Math.random() * 16 + 5);
                 premioOro = (int) (Math.random() * 50 + 1);
-                etNombre.setForeground(Color.GREEN);
+                etNombre.setForeground(Color.RED);
                 break;
             default:
                 premioExp = (int) (Math.random() * 500 + 1);
                 premioOro = (int) (Math.random() * 1000 + 1);
-                etNombre.setForeground(Color.GREEN);
+                etNombre.setForeground(Color.MAGENTA);
         }
     }
 

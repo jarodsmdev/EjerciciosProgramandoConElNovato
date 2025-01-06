@@ -68,6 +68,7 @@ public class VentanaFinal {
     public void abrir() {
         prepararMensaje();
         montarEscena();
+        marco.setUndecorated(true);
         marco.setVisible(true);
     }
 
@@ -84,7 +85,7 @@ public class VentanaFinal {
         panelPrincipal.add(btnSalir, BorderLayout.SOUTH);
 
         marco.add(panelPrincipal);
-        marco.setSize(600, 500);
+        marco.setSize(650, 600);
         marco.setLocationRelativeTo(null);
         marco.setModal(true);
     }

@@ -8,9 +8,13 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import marcoPanelPersonalizado.FramePersonalizado;
 
@@ -26,6 +30,7 @@ public class VentanaPrincipal {
 
     private JButton btnExplorar;
     private JButton btnTienda;
+    private JButton btnSalir;
 
     private Personaje pj;
 
@@ -33,6 +38,14 @@ public class VentanaPrincipal {
         this.pj = pj;
 
         marco = new FramePersonalizado(ANCHO, ALTO, "Mini RPG", true);
+        marco.setResizable(false);
+        marco.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        marco.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                preguntarSalir();
+            }
+        });
 
         panelPrincipal = new JPanel(new BorderLayout());
         panelSuperior = new JPanel();
@@ -50,10 +63,14 @@ public class VentanaPrincipal {
         btnExplorar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnTienda = new JButton("Tienda");
         btnTienda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnSalir = new JButton("Salir");
+        btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
     }
 
     public void ComenzarJuego() {
         montarEscena();
+        //marco.setUndecorated(true);
         marco.setVisible(true);
     }
 
@@ -96,8 +113,12 @@ public class VentanaPrincipal {
         //Añadimos nuestros botones al panel inferior
         btnExplorar.addActionListener(e -> nuevaExploracion());
         panelInferior.add(btnExplorar);
+
         btnTienda.addActionListener(e -> abrirTienda());
         panelInferior.add(btnTienda);
+
+        btnSalir.addActionListener(e -> preguntarSalir());
+        panelInferior.add(btnSalir);
 
         //Añadimos paneles secundarios al panel principal
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
@@ -110,7 +131,7 @@ public class VentanaPrincipal {
     private void nuevaExploracion() {
         Exploracion exploracion = new Exploracion(this);
         exploracion.comenzarExploracion();
-        
+
         //Actualizar la barra superior
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
         marco.repaint();
@@ -150,6 +171,14 @@ public class VentanaPrincipal {
         tienda.abrirTienda();
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
         marco.repaint();
+    }
+
+    private void preguntarSalir() {
+        int respuesta = JOptionPane.showConfirmDialog(marco,
+                "¿Seguro que deseas salir?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
 
 }

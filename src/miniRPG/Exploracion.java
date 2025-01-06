@@ -1,6 +1,6 @@
 /**
- *
  * Ejercicio 50 JAVA - Mini-RPG | PARTE 4/10
+ *
  */
 package miniRPG;
 
@@ -36,6 +36,7 @@ public class Exploracion {
 
     private Personaje pj;
     private Monstruo enemigo;
+    private boolean esjefe = false;
 
     private VentanaPrincipal ventana;
 
@@ -73,6 +74,11 @@ public class Exploracion {
         //Ahora aquí instanciariamos un objeto de la clase monstruo
         enemigo = Monstruo.generaMonstruo(numExploracion);
 
+        //Verificar si el enemigo es el Jefe final
+        if (enemigo.getNombre().equalsIgnoreCase("Jefe")) {
+            esjefe = true;
+        }
+
     }
 
     private void montarInterfaz() {
@@ -92,11 +98,17 @@ public class Exploracion {
         // Elaboramos panel inferior con sus botones
         btnAtacar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnAtacar.addActionListener(e -> atacar());
+        
         btnHuir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnHuir.addActionListener(e -> marco.dispose());
-
+        btnHuir.addActionListener(e -> {
+            numExploracion++;
+            marco.dispose();
+        });
+        btnHuir.setEnabled(!esjefe); //Si es Jefe se desactiva el botón
+        
         panelInferior.add(btnAtacar);
         panelInferior.add(new JLabel("   "));
+        
         panelInferior.add(btnHuir);
 
         // Añadimos los paneles secundarios al principal
@@ -107,9 +119,10 @@ public class Exploracion {
         panelPrincipal.add(panelMonstruo, BorderLayout.EAST);
 
         marco.add(panelPrincipal);
-        marco.setSize(650, 500);
+        marco.setSize(650, 600);
         marco.setLocationRelativeTo(null);
         marco.setModal(true);
+        marco.setUndecorated(true);
         marco.setVisible(true);
     }
 
@@ -161,14 +174,23 @@ public class Exploracion {
 
         pj.setOro(pj.getOro() + enemigo.getPremioOro());
         ventana.getEtOro().setText(" Oro: " + pj.getOro());
+
+        if (esjefe) {
+            victoria();
+        }
+    }
+
+    private void victoria() {
+        VentanaFinal v = new VentanaFinal(VentanaFinal.VICTORIA, pj);
+        v.abrir();
     }
 
     private void derrota() {
         VentanaFinal v = new VentanaFinal(VentanaFinal.DERROTA, pj);
         v.abrir();
     }
-    
-    public static void setNumExploracion(int numExploracion){
+
+    public static void setNumExploracion(int numExploracion) {
         Exploracion.numExploracion = numExploracion;
     }
 
