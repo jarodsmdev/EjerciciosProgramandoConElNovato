@@ -7,11 +7,15 @@ package ejerciciosVarios;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  * @version 07/01/2025
@@ -48,11 +52,19 @@ class PanelJuegoMemory extends JPanel {
         setLayout(new GridLayout(4, 4));
 
         // Acá agregaremos los botones
-        cuadrados = CuadradoMemory.generaCuadrados();
+        cuadrados = CuadradoMemory.generaCuadrados(this);
 
         // Agregar los elementos al JPanel
         for (CuadradoMemory c : cuadrados) {
             add(c);
+        }
+    }
+
+    public void botonesEncendidos(boolean opcion) {
+        for (CuadradoMemory c : cuadrados) {
+            if (c.getBackground() == Color.WHITE) {
+                c.setEnabled(opcion);
+            }
         }
     }
 }
@@ -70,9 +82,15 @@ class CuadradoMemory extends JButton {
         Color.GRAY, Color.GRAY
     };
     private int numBoton;
+    private static int numClics = 0;
     private static int numStatic = 0;
+    private static int parejas = 0;
+    private static CuadradoMemory boton1;
+    private static CuadradoMemory boton2;
+    private PanelJuegoMemory panel;
 
-    public CuadradoMemory() {
+    public CuadradoMemory(PanelJuegoMemory panel) {
+        this.panel = panel;
         numBoton = numStatic;
         numStatic++;
         setBackground(Color.WHITE);
@@ -80,11 +98,11 @@ class CuadradoMemory extends JButton {
         addActionListener(e -> compruebaPareja());
     }
 
-    public static ArrayList<CuadradoMemory> generaCuadrados() {
+    public static ArrayList<CuadradoMemory> generaCuadrados(PanelJuegoMemory panel) {
         ArrayList<CuadradoMemory> lista = new ArrayList();
 
         for (int i = 0; i < 16; i++) {
-            lista.add(new CuadradoMemory());
+            lista.add(new CuadradoMemory(panel));
         }
 
         Collections.shuffle(lista);
@@ -94,6 +112,47 @@ class CuadradoMemory extends JButton {
 
     private void compruebaPareja() {
         setBackground(colores[numBoton]);
+        numClics++;
+
+        if (boton1 == null) {
+            boton1 = this;
+        } else {
+            boton2 = this;
+            panel.botonesEncendidos(false);
+
+            Timer temporizador = new Timer(500, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (boton1.getBackground() == boton2.getBackground()) {
+                        boton1.setEnabled(false);
+                        boton2.setEnabled(false);
+                        parejas++;
+                        if (parejas == 8) {
+                            ganarPartida();
+                        }
+                    } else {
+                        boton1.setBackground(Color.WHITE);
+                        boton2.setBackground(Color.WHITE);
+                    }
+                    boton1 = null;
+                    boton2 = null;
+                    panel.botonesEncendidos(true);
+                }
+
+                private void ganarPartida() {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Lo has conseguido en " + numClics + " clics",
+                            "Fin de Partida",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    System.exit(0);
+                }
+            });
+
+            temporizador.setRepeats(false);
+            temporizador.start();
+        }
     }
 
 }
