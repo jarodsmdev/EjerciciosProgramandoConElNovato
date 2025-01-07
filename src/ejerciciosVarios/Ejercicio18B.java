@@ -1,6 +1,6 @@
 /*
- * Ejercicio 54 JAVA - ¡JUEGO DE MEMORIA!
- * URL: https://youtu.be/01CcGdYjR2w?list=PL0OKXi7iFPGqMMU78vaCvtSAOjS1ZNxbK
+ * Ejercicio 55 JAVA - TRABAJANDO EN EL CODIGO AJENO
+ * URL: https://youtu.be/zJgnHnQtGTU?list=PL0OKXi7iFPGqMMU78vaCvtSAOjS1ZNxbK
  */
 package ejerciciosVarios;
 
@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -21,7 +23,7 @@ import javax.swing.Timer;
  * @version 07/01/2025
  * @author Jarod Smith
  */
-public class Ejercicio18 {
+public class Ejercicio18B {
 
     public static void main(String[] args) {
         InterfazJuegoMemory juegoMemory = new InterfazJuegoMemory();
@@ -35,7 +37,7 @@ class InterfazJuegoMemory extends JFrame {
         add(new PanelJuegoMemory());
 
         //Configura el JFrame
-        setTitle("Juego Memory");
+        setTitle("Juego Memory con Logos");
         setSize(800, 800);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -52,7 +54,7 @@ class PanelJuegoMemory extends JPanel {
         setLayout(new GridLayout(4, 4));
 
         // Acá agregaremos los botones
-        cuadrados = CuadradoMemory.generaCuadrados(this);
+        cuadrados = CuadradoMemory.generaCuadrados();
 
         // Agregar los elementos al JPanel
         for (CuadradoMemory c : cuadrados) {
@@ -60,49 +62,39 @@ class PanelJuegoMemory extends JPanel {
         }
     }
 
-    public void botonesEncendidos(boolean opcion) {
-        for (CuadradoMemory c : cuadrados) {
-            if (c.getBackground() == Color.WHITE) {
-                c.setEnabled(opcion);
-            }
-        }
-    }
 }
 
 class CuadradoMemory extends JButton {
 
-    private Color[] colores = {
-        Color.GREEN, Color.GREEN,
-        Color.BLUE, Color.BLUE,
-        Color.RED, Color.RED,
-        Color.BLACK, Color.BLACK,
-        Color.YELLOW, Color.YELLOW,
-        Color.MAGENTA, Color.MAGENTA,
-        Color.PINK, Color.PINK,
-        Color.GRAY, Color.GRAY
-    };
     private int numBoton;
     private static int numClics = 0;
     private static int numStatic = 0;
     private static int parejas = 0;
     private static CuadradoMemory boton1;
     private static CuadradoMemory boton2;
-    private PanelJuegoMemory panel;
 
-    public CuadradoMemory(PanelJuegoMemory panel) {
-        this.panel = panel;
+    private ImageIcon imagen;
+
+    public CuadradoMemory() {
+
         numBoton = numStatic;
         numStatic++;
+
+        if (numStatic == 8) {
+            numStatic = 0;
+        }
         setBackground(Color.WHITE);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addActionListener(e -> compruebaPareja());
+
+        imagen = new ImageIcon("./resources/memory/logos/" + numBoton + ".png");
     }
 
-    public static ArrayList<CuadradoMemory> generaCuadrados(PanelJuegoMemory panel) {
+    public static ArrayList<CuadradoMemory> generaCuadrados() {
         ArrayList<CuadradoMemory> lista = new ArrayList();
 
         for (int i = 0; i < 16; i++) {
-            lista.add(new CuadradoMemory(panel));
+            lista.add(new CuadradoMemory());
         }
 
         Collections.shuffle(lista);
@@ -111,32 +103,63 @@ class CuadradoMemory extends JButton {
     }
 
     private void compruebaPareja() {
-        setBackground(colores[numBoton]);
-        numClics++;
 
         if (boton1 == null) {
             boton1 = this;
-        } else {
+            setIcon(imagen);
+            numClics++;
+            return;
+        }
+
+        if (boton2 == null) {
             boton2 = this;
-            panel.botonesEncendidos(false);
+            setIcon(imagen);
+            numClics++;
 
             Timer temporizador = new Timer(500, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (boton1.getBackground() == boton2.getBackground()) {
-                        boton1.setEnabled(false);
-                        boton2.setEnabled(false);
-                        parejas++;
-                        if (parejas == 8) {
-                            ganarPartida();
-                        }
+                    if (esParejaCorrecta()) {
+                        procesarParejaCorrecta();
                     } else {
-                        boton1.setBackground(Color.WHITE);
-                        boton2.setBackground(Color.WHITE);
+                        reiniciarBotones();
                     }
+                    limpiarSeleccion();
+                }
+
+                private boolean esParejaCorrecta() {
+                    ImageIcon logo1 = toImageIcon(boton1);
+                    ImageIcon logo2 = toImageIcon(boton2);
+                    return logo1.getDescription().equals(logo2.getDescription()) && boton1 != boton2;
+                }
+
+                private ImageIcon toImageIcon(JButton boton) {
+                    return (ImageIcon) boton.getIcon();
+                }
+
+                private void procesarParejaCorrecta() {
+                    removerActionListeners(boton1);
+                    removerActionListeners(boton2);
+                    parejas++;
+                    if (parejas == 8) {
+                        ganarPartida();
+                    }
+                }
+
+                private void removerActionListeners(AbstractButton boton) {
+                    for (ActionListener al : boton.getActionListeners()) {
+                        boton.removeActionListener(al);
+                    }
+                }
+
+                private void reiniciarBotones() {
+                    boton1.setIcon(null);
+                    boton2.setIcon(null);
+                }
+
+                private void limpiarSeleccion() {
                     boton1 = null;
                     boton2 = null;
-                    panel.botonesEncendidos(true);
                 }
 
                 private void ganarPartida() {
@@ -152,7 +175,6 @@ class CuadradoMemory extends JButton {
 
             temporizador.setRepeats(false);
             temporizador.start();
-        }
+        } 
     }
-
 }
