@@ -1,6 +1,6 @@
 /*
  * Ejercicio 56 JAVA - CRUD | REGISTRO VIDEOJUEGOS 1/4
- * URL: https://youtu.be/rcVUYasLBxs?list=PL0OKXi7iFPGqMMU78vaCvtSAOjS1ZNxbK
+ * URL: https://youtu.be/rcVUYasLBxs?si=5uDVK1WXqJg7ygwd
  */
 package aplicacionCRUD;
 
@@ -48,6 +48,8 @@ public class InterfazCRUD extends JFrame {
         prepararTabla();
         
         // Agregar ActionListener a los botones
+        btnCreate.addActionListener(e -> ConectividadCRUD.agregarRegistro(modeloTabla));
+        btnDelete.addActionListener(e -> ConectividadCRUD.borrarRegistro(tabla, modeloTabla));
         
         setHandCursor(btnCreate);
         setHandCursor(btnUpdate);
