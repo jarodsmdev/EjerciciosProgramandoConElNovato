@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,11 +48,23 @@ public class InterfazCRUD extends JFrame {
 
     private void montarInterfaz() {
         prepararTabla();
-        
+
+        modeloTabla.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    ConectividadCRUD.actualizarConListener(tabla, modeloTabla);
+                }
+            }
+        });
+
         // Agregar ActionListener a los botones
         btnCreate.addActionListener(e -> ConectividadCRUD.agregarRegistro(modeloTabla));
+
         btnDelete.addActionListener(e -> ConectividadCRUD.borrarRegistro(tabla, modeloTabla));
-        
+
+        btnUpdate.addActionListener(e -> ConectividadCRUD.actualizarRegistro(tabla, modeloTabla, null));
+
         setHandCursor(btnCreate);
         setHandCursor(btnUpdate);
         setHandCursor(btnDelete);
@@ -73,14 +87,14 @@ public class InterfazCRUD extends JFrame {
 
     private void prepararTabla() {
 
-        String[] columnas = {"Nombre", "Plataforma", "Duración", "Recomendable"};
+        String[] columnas = {"Nombre", "Plataforma", "Duracion", "Recomendable"};
         modeloTabla = new DefaultTableModel(columnas, 0);
         tabla.setModel(modeloTabla);
-        
+
         ConectividadCRUD.mostrarDatos(modeloTabla);
     }
-    
-    private void setHandCursor(JButton boton){
+
+    private void setHandCursor(JButton boton) {
         boton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 }

@@ -1,3 +1,6 @@
+-- Eliminar la base de datos si existe
+DROP DATABASE IF EXISTS ejercicios_novato;
+
 -- Crear la base de datos
 CREATE DATABASE ejercicios_novato;
 
@@ -6,11 +9,13 @@ USE ejercicios_novato;
 
 -- Crear la tabla VIDEOJUEGOS
 CREATE TABLE VIDEOJUEGOS (
-    NOMBRE VARCHAR(25) NOT NULL,
+    NOMBRE VARCHAR(50) NOT NULL UNIQUE,
     PLATAFORMA VARCHAR(20) NOT NULL,
-    DURACION INT NOT NULL,
-    RECOMENDABLE TINYINT(1) NOT NULL
-);
+    DURACION INT NOT NULL CHECK (DURACION >= 0),
+    RECOMENDABLE TINYINT(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB 
+  CHARACTER SET utf8mb4 
+  COLLATE utf8mb4_spanish2_ci;
 
 -- Insertar registros de ejemplo
 INSERT INTO VIDEOJUEGOS (NOMBRE, PLATAFORMA, DURACION, RECOMENDABLE) VALUES

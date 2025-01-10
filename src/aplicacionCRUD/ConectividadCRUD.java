@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +22,7 @@ public class ConectividadCRUD {
 
     private static Connection miCon;
     private static Statement miSt;
+    private static Object nuevoValor;
 
     public static void conectar() {
         try {
@@ -96,7 +95,7 @@ public class ConectividadCRUD {
             ps.setInt(4, (int) registro[3]);
 
             ps.execute();
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
                     null,
@@ -127,9 +126,9 @@ public class ConectividadCRUD {
                 PreparedStatement ps = miCon.prepareStatement(borrarSQL);
 
                 ps.setString(1, nombre);
-                
+
                 ps.execute();
-                
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(
                         null,
@@ -138,10 +137,71 @@ public class ConectividadCRUD {
                         JOptionPane.ERROR_MESSAGE
                 );
             }
-            
+
             desconectar();
-            
+
             mostrarDatos(modelo);
         }
+    }
+
+    public static void actualizarRegistro(JTable tabla, DefaultTableModel modelo, Object valor) {
+
+        int fila = tabla.getSelectedRow();
+        int columna = tabla.getSelectedColumn();
+
+        if (fila != -1) {
+            String nombre = modelo.getValueAt(fila, 0).toString();
+            if (valor == null) {
+                nuevoValor = JOptionPane.showInputDialog("Introduce nuevo valor: ");
+            }else{
+                nuevoValor = valor;
+            }
+
+            if (nuevoValor != null && !nuevoValor.equals("")) {
+
+                if (columna == 3) {
+                    if (nuevoValor.equals("true")) {
+                        nuevoValor = 1;
+                    } else {
+                        nuevoValor = 0;
+                    }
+                }
+
+                conectar();
+
+                String SQL = "UPDATE videojuegos SET " + tabla.getColumnName(columna) + " = '" + nuevoValor + "' WHERE NOMBRE = '" + nombre + "'";
+                try {
+                    miSt.execute(SQL);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            ex.getMessage(),
+                            "Error al Actualizar",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+
+                desconectar();
+
+                mostrarDatos(modelo);
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Debe seleccionar un registro primero",
+                    "Error al Actualizar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public static void actualizarConListener(JTable tabla, DefaultTableModel modelo){
+        int fila = tabla.getSelectedRow();
+        int columna = tabla.getSelectedColumn();
+        
+        Object valor = modelo.getValueAt(fila, columna);
+        
+        actualizarRegistro(tabla, modelo, valor);
     }
 }
